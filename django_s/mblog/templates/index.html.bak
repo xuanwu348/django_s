@@ -8,9 +8,8 @@
 	<h1>Welcom to my blog<h1>
 	<hr>
 	{% for post in posts %}
-	    <p style="font-size:16pt;font-weight:bold;">
-	        <a href="/post/{{post.title}}"> {{post.title}} </a>
-	    </p>
+	<p style="font-size:16pt;font-weight:bold;">{{post.title}}</p>
+	<p style="font-size:10pt;letter-spacing:1pt;">{{post.body}}</p>
 	{% endfor %}
 	<hr><br>
 	<div style="font-size:10pt;">
