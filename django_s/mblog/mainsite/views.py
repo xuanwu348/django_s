@@ -32,8 +32,9 @@ def showpost(request, title):
                 return HttpResponse(html)
         """
         post = Post.objects.get(title=title)
+        now = datetime.now()
         if post is not None:
-            html = template.render({"post":post})
+            html = template.render({"post":post,"now":now})
             return HttpResponse(html)
     except:
         return redirect("/")
