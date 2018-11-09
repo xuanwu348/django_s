@@ -9,7 +9,9 @@ class PModelPost(admin.ModelAdmin):
     list_display = ("maker", "name")
 
 class ProductPost(admin.ModelAdmin):
-    list_display = ("pmodel","nickname","year")
+    list_display = ("pmodel","nickname","price","year")
+    search_fields = ("nickname",)
+    ordering = ("-price","-year")
 
 class PPhotoPost(admin.ModelAdmin):
     list_display = ("product", "description")
