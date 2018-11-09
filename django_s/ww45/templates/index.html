@@ -11,7 +11,7 @@
 		<td>Price</td>
 {% endif %}
     <tr bgcolor="{% cycle '#ffccff' 'ccffcc' %}">
-	    <td>{{ p.nickname }}</td>
+	    <td><a href="{% url 'detail-url' p.id %}">{{ p.nickname }}</td>
 	    <td>{{ p.pmodel.maker.name}}/{{ p.pmodel }}</td>
 	    <td>{{ p.year }}</td>
     </tr>

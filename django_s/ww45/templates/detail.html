@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}{{product.nickname | default:"Don't find this smart mobile phone!"}}{% endblock %}
+{% block content %}
+<div class='container' align=center>
+{% if product %}
+<table>
+	<tr><td align=center><h3>{{product.nickname}}</h3></td></tr>
+	<tr><td align=center>{{ product.description }}</td></tr>
+	<tr><td align=center>OutFactory Year:{{product.year}}</td></tr>
+	<tr><td align=center>Price:{{product.price}} $</td></tr>
+	{% for image in images%}
+	    {% if forloop.first %}
+	    <tr><td align=center>
+            {% endif%}
+	    <img data-src=" {{image.url}} " width=350 alt={{product.description}}><br>
+	    {% if forloop.last %}
+	     </td></tr>
+	    {% endif %}
+	{% empty %}
+	<tr><td align=center>No photo</td></tr>
+	{% endfor %}
+</table>
+{% else %}
+<h2>Don't find the mobile phone you searched!</h2>
+{% endif %}
+</div>
+{% endblock %}
+
