@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title%}Smart phone market{%endblock %}
+{% block content %}
+{% for p in product %}
+{% if forloop.first %}
+<table>
+	<tr bgcolor="#cccccc">
+		<td width=250>In pository</td>
+		<td width=150>Producer/Model</td>
+		<td width=50>OutFactoryTime</td>
+		<td>Price</td>
+{% endif %}
+    <tr bgcolor="{% cycle '#ffccff' 'ccffcc' %}">
+	    <td>{{ p.nickname }}</td>
+	    <td>{{ p.pmodel.maker.name}}/{{ p.pmodel }}</td>
+	    <td>{{ p.year }}</td>
+    </tr>
+{% if forloop.last %}
+</table>
+{% endif %}
+{% empty %}
+<h3>By cuurently there are no phone for sell, I am very sorry!</h3>
+{% endfor %}
+<div class='container' align=center></div>
+{% endblock %}

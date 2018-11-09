@@ -1,0 +1,4 @@
+<hr>
+{% load staticfiles %}
+<img src="{% static 'images/logo.PNG' %}", width=100>
+<em>Copyright 2018 <a href="/">http://localhost:8080</a>.All right reserved.</em>
