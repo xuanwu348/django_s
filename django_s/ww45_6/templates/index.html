@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title%}I want to say something{%endblock %}
+{% block content %}
+<div class='container'>
+	{% if not verified %}
+	<form name="my form" action="/" method="GET">
+		<label for="user_id">Your ID:</label>
+		<input id="user_id" type='text' name='user_id'>
+		<label for="user_pass">Your Password:</label>
+		<input id="user_pass" type="password" name="user_pass">
+		<br/>
+		<label for="byear">Birthday</label>
+		<select name="byear">
+			{% for year in years %}
+			<option value="{{ year}}">{{year}}</option>
+		        {% endfor %}
+		</select><br/>
+		Like color(Multi choice):
+		<input type="checkbox" name='fcolor' value="Green">Green
+		<input type="checkbox" name='fcolor' value="Orange">Orange
+		<input type="checkbox" name='fcolor' value="Blue">Blue
+		<input type="checkbox" name='fcolor' value="Red">red
+		<input type="checkbox" name='fcolor' value="Yellow">Yellow</br>
+		<input type="submit" value="Login">
+		<input type='reset' value="Reset">
+	</form>
+	{% endif %}
+	Your ID: {{ urid | default:"Not input ID!" }}<br/>
+	Year:{{ byear | default:"Not choose year"}}<br/>
+	Like Color:
+	{% for color in urfcolor %}
+	    {{color}}
+	{% empty %}
+	Don't have chosen any color by now
+	{% endfor %}
+	<br/>
+	{% if verified %}
+	   <em>Your have verified success!</em>
+	{% else %}
+	   <em>The password or userid is wrong!</em>
+	{%endif%}
+
+</div>
+{% endblock %}

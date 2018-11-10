@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title%}I want to say something{%endblock %}
+{% block content %}
+<div class='container'>
+	{% if not verified %}
+	<form name="my form" action="/" method="GET">
+		<label for="user_id">Your ID:</label>
+		<input id="user_id" type='text' name='user_id'>
+		<label for="user_pass">Your Password:</label>
+		<input id="user_pass" type="password" name="user_pass">
+		<input type="submit" value="Login">
+		<input type='reset' value="Reset">
+	</form>
+	{% endif %}
+	Your ID: {{ urid | default:"Not input ID!" }}<br/>
+	{% if verified %}
+	   <em>Your have verified success!</em>
+	{% else %}
+	   <em>The password or userid is wrong!</em>
+	{%endif%}
+
+</div>
+{% endblock %}
