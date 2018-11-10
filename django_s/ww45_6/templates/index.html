@@ -1,44 +1,54 @@
-{% extends "base.html" %}
-{% block title%}I want to say something{%endblock %}
+{% extends 'base.html' %}
+{% block title %}I only say something here about my mood{% endblock %}
 {% block content %}
-<div class='container'>
-	{% if not verified %}
-	<form name="my form" action="/" method="GET">
-		<label for="user_id">Your ID:</label>
-		<input id="user_id" type='text' name='user_id'>
-		<label for="user_pass">Your Password:</label>
-		<input id="user_pass" type="password" name="user_pass">
-		<br/>
-		<label for="byear">Birthday</label>
-		<select name="byear">
-			{% for year in years %}
-			<option value="{{ year}}">{{year}}</option>
-		        {% endfor %}
-		</select><br/>
-		Like color(Multi choice):
-		<input type="checkbox" name='fcolor' value="Green">Green
-		<input type="checkbox" name='fcolor' value="Orange">Orange
-		<input type="checkbox" name='fcolor' value="Blue">Blue
-		<input type="checkbox" name='fcolor' value="Red">red
-		<input type="checkbox" name='fcolor' value="Yellow">Yellow</br>
-		<input type="submit" value="Login">
-		<input type='reset' value="Reset">
-	</form>
-	{% endif %}
-	Your ID: {{ urid | default:"Not input ID!" }}<br/>
-	Year:{{ byear | default:"Not choose year"}}<br/>
-	Like Color:
-	{% for color in urfcolor %}
-	    {{color}}
-	{% empty %}
-	Don't have chosen any color by now
+<div class="container">
+{% if message %}
+ <div class="alert alert-warning">{{ message }}</div>
+{% endif %}
+<form name="my form" action="/" method='GET'>
+	Now Mood:<br/>
+	{% for mood in moods %}
+	<input type="radio" name='mood' value='{{ mood }}'>{{ mood.status }}
 	{% endfor %}
 	<br/>
-	{% if verified %}
-	   <em>Your have verified success!</em>
-	{% else %}
-	   <em>The password or userid is wrong!</em>
-	{%endif%}
+	Mood LeaveBoard:<br/>
+	<textarea name='user_post' rows=3 cols=70></textarea><br/>
+	<label for='user_id'>Your nickname: </label>
+	<input id='user_id' type='text' name='user_id'>
+	<label for='user_pass'>CommitPass</label><br/>
+	<input id='user_pass' type='password' name='user_pass'><br/>
+	<input type='submit' value='Submit'>
+	<input type="reset" value='Reset'>
+</form>
+<div class='row'>
+    <div class='col-md-12'>
+	<div class='panel panel-default'>
+		<div class='panel-heading' align=center>
+                  <h3>~~I xxxxxxx~~</h3>
+		 </div>
+        </div>
 
-</div>
+<script>
+    function go_delete(id){
+        var user_pass = document.getElementById('user_pass').value;
+        if (user_pass != "") {
+            var usr = '/' + id + '/' + user_pass;
+            window.location = usr;
+        }
+    }
+</script>
+{% for p in posts %}
+    {% cycle "<div class='row'> <div class='col-md-4'>" "<div class='col-md-4'>" "<div class='col-md-4'>" %}
+            <div class='panel panel-primary'>
+		    <div class='panel-heading'>@{ p.nickname }}@ consider {{ p.mood }}</div>
+	            <div class='panel-body'>{{ p.message | linebreaks }}</div>
+                    <div class='panel-footer' align='right'>
+                      <i><small>{{ p.pub_time }}</small></i>
+                      <span class="glyphicon glyphicon-trash" onclick='go_delete({{p.id}})'></span>
+                    </div>
+	    </div>
+	 </div>
+	{% cycle "" "" "</div>"%}  {% endfor %}
+       </div>
 {% endblock %}
+	

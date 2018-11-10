@@ -1,9 +1,18 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template.loader import get_template
+from mysite import models
 
 # Create your views here.
 def index(request):
+    template = get_template("index.html")
+    posts = models.Post.objects.filter(enabled=True).order_by("-pub_time")[:30]
+    moods = models.Mood.objects.all()
+    html = template.render(locals())
+    return HttpResponse(html)
+
+    """
+    the second practise
     template = get_template('index.html')
     try:
         urid = request.GET['user_id']
@@ -19,6 +28,7 @@ def index(request):
     years = range(1960,2021)
     html = template.render(locals())
     return HttpResponse(html)
+    """
 
     """
     the first display
