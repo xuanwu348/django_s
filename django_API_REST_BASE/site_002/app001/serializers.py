@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from app001.models import App001, LANGUAGE_CHOICES, STYLE_CHOICES
+from django.contrib.auth.models import User
 
 """
 class App001Serializer(serializers.Serializer):
@@ -23,7 +24,14 @@ class App001Serializer(serializers.Serializer):
         return instance
 """
 class App001Serializer(serializers.ModelSerializer):
+    owner = serializers.ReadOnlyField(source='owner.username')
     class Meta:
         model = App001
-        fields = ("id", 'title', 'code', "linenos", "language", "style")
+        fields = ("id", 'owner', 'title', 'code', "linenos", "language", "style")
 
+class UserSerializer(serializers.ModelSerializer):
+    app001s = serializers.PrimaryKeyRelatedField(many=True, queryset=App001.objects.all())
+
+    class Meta:
+        model = User
+        fields = ("id","username","app001s")
