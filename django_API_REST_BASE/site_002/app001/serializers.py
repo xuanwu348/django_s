@@ -23,15 +23,33 @@ class App001Serializer(serializers.Serializer):
         instance.save()
         return instance
 """
+"""
 class App001Serializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     class Meta:
         model = App001
         fields = ("id", 'owner', 'title', 'code', "linenos", "language", "style")
+"""
+class App001Serializer(serializers.HyperlinkedModelSerializer):
+    owner = serializers.ReadOnlyField(source='owner.username')
+    highlight = serializers.HyperlinkedIdentityField(view_name='app001-highlight', format='html')
+    
+    class Meta:
+        model = App001
+        fields = ("url","id","highlight","owner","title","code","linenos","language",'style')
 
+
+"""
 class UserSerializer(serializers.ModelSerializer):
     app001s = serializers.PrimaryKeyRelatedField(many=True, queryset=App001.objects.all())
 
     class Meta:
         model = User
         fields = ("id","username","app001s")
+"""
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    app001s = serializers.HyperlinkedRelatedField(many=True,view_name="app001-detail",read_only=True)
+    
+    class Meta:
+        model = User
+        fields = ('url', 'id', 'username', "app001s")
