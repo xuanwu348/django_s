@@ -14,4 +14,4 @@ pytz==2018.7
 PyYAML==3.13
 requests==2.20.1
 uritemplate==3.0.0
-urllib3==1.24.1
+urllib3==1.26.5
